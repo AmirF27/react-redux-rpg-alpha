@@ -6,7 +6,9 @@ export const actions = {
     GAIN_XP: "GAIN_XP",
     MOVE: "MOVE",
     DRINK_POTION: "DRINK_POTION",
-    TAKE_DAMAGE: "TAKE_DAMAGE"
+    PLAYER_TAKE_DAMAGE: "PLAYER_TAKE_DAMAGE",
+    MONSTER_TAKE_DAMAGE: "MONSTER_TAKE_DAMAGE",
+    ATTACK: "ATTACK"
 };
 
 /*
@@ -25,8 +27,15 @@ export function drinkPotion() {
     };
 }
 
-export function takeDamage(amount) {
+export function playerTakeDamage(amount) {
     return {
         type: actions.DRINK_POTION,
+    };
+}
+
+export function monsterTakeDamage(amount) {
+    return {
+        type: actions.MONSTER_TAKE_DAMAGE,
+        payload: amount
     };
 }

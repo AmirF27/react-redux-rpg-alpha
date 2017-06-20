@@ -16,7 +16,12 @@ export const initialState = {
             potions: 2
         }
     },
-    monster: {}
+    monster: {
+        stats: {
+            health: 50,
+            maxHealth: 50
+        }
+    }
 };
 
 export const levels = [

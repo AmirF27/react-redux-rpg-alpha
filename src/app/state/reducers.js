@@ -36,11 +36,17 @@ function heroReducer(state = initialState.hero, action) {
                 inventory: inventoryReducer(inventory, action)
             };
 
-        case actions.TAKE_DAMAGE:
+        case actions.PLAYER_TAKE_DAMAGE:
             return {
                 ...state,
                 stats: statsReducer(stats, action)
             };
+
+        // case actions.MONSTER_TAKE_DAMAGE:
+        //     return {
+        //         ...state,
+        //         stats: monsterReducer(undefined, takeDamage())
+        //     };
     }
 
     return state;
@@ -54,7 +60,9 @@ function statsReducer(state = initialState.hero.stats, action) {
             health = Math.min(health + 10, maxHealth);
             return { ...state, health, maxHealth };
 
-        case actions.TAKE_DAMAGE:
+        case actions.PLAYER_TAKE_DAMAGE:
+        case actions.MONSTER_TAKE_DAMAGE:
+            console.log({ ...state, health });
             health = Math.max(0, health - action.payload);
             return { ...state, health };
     }
@@ -75,7 +83,15 @@ function inventoryReducer(state = initialState.hero.inventory, action) {
 }
 
 function monsterReducer(state = initialState.monster, action) {
-    // TODO: write monster reducer logic
+    const { stats } = state;
+
+    switch (action.type) {
+        case actions.MONSTER_TAKE_DAMAGE:
+            return {
+                ...state,
+                stats: statsReducer(stats, action)
+            };
+    }
 
     return state;
 }
