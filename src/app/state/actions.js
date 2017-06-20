@@ -11,31 +11,28 @@ export const actions = {
     ATTACK: "ATTACK"
 };
 
-/*
- * Action Creators
-**/
-export function gainXp(amount) {
-    return {
-        type: actions.GAIN_XP,
-        payload: amount
-    };
-}
-
-export function drinkPotion() {
-    return {
-        type: actions.DRINK_POTION,
-    };
-}
-
-export function playerTakeDamage(amount) {
-    return {
-        type: actions.DRINK_POTION,
-    };
-}
-
-export function monsterTakeDamage(amount) {
-    return {
-        type: actions.MONSTER_TAKE_DAMAGE,
-        payload: amount
-    };
-}
+export const actionCreators = {
+    gainXp(amount) {
+        return {
+            type: actions.GAIN_XP,
+            payload: amount
+        };
+    },
+    drinkPotion() {
+        return {
+            type: actions.DRINK_POTION,
+        };
+    },
+    playerTakeDamage(amount) {
+        return {
+            type: actions.PLAYER_TAKE_DAMAGE,
+            payload: amount
+        };
+    },
+    monsterTakeDamage(amount) {
+        return {
+            type: actions.MONSTER_TAKE_DAMAGE,
+            payload: amount
+        };
+    }
+};
