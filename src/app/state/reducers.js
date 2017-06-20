@@ -8,10 +8,6 @@ function heroReducer(state = initialState.hero, action) {
     const { stats, inventory } = state;
 
     switch (action.type) {
-        // case actions.LEVEL_UP:
-        //     const level = state.level + 1;
-        //     return { ...state, level };
-
         case actions.GAIN_XP:
             let { level, xp } = state;
 
@@ -41,12 +37,6 @@ function heroReducer(state = initialState.hero, action) {
                 ...state,
                 stats: statsReducer(stats, action)
             };
-
-        // case actions.MONSTER_TAKE_DAMAGE:
-        //     return {
-        //         ...state,
-        //         stats: monsterReducer(undefined, takeDamage())
-        //     };
     }
 
     return state;
@@ -62,7 +52,6 @@ function statsReducer(state = initialState.hero.stats, action) {
 
         case actions.PLAYER_TAKE_DAMAGE:
         case actions.MONSTER_TAKE_DAMAGE:
-            console.log({ ...state, health });
             health = Math.max(0, health - action.payload);
             return { ...state, health };
     }
