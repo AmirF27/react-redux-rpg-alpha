@@ -28,7 +28,7 @@ function heroReducer(state = initialState.hero, action) {
         case actions.DRINK_POTION:
             return {
                 ...state,
-                stats: statsReducer(stats, action),
+                stats: inventory.potions > 0 ? statsReducer(stats, action) : stats,
                 inventory: inventoryReducer(inventory, action)
             };
 
