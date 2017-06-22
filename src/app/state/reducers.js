@@ -13,7 +13,7 @@ function statsReducer(state = initialState.hero.stats, action) {
     case actions.MONSTER_TAKE_DAMAGE:
       health = Math.max(0, health - action.payload);
       return { ...state, health };
-    case actions.ADD_MAX_HEALTH:
+    case actions.ADD_MAX_HEALTH_AFTER_LEVEL_UP:
       maxHealth += 10;
       health = maxHealth;
       return { ...state, health, maxHealth };
@@ -34,8 +34,8 @@ function inventoryReducer(state = initialState.hero.inventory, action) {
 
 function heroReducer(state = initialState.hero, action) {
   let { level, xp } = state;
-  let { position: { x, y } } = state;
   let { stats, inventory } = state;
+  let { position: { x, y } } = state;
 
   switch (action.type) {
     case actions.GAIN_XP:
@@ -44,10 +44,18 @@ function heroReducer(state = initialState.hero, action) {
         level++;
       }
       return { ...state, level, xp };
+    case actions.ADD_MAX_HEALTH_AFTER_LEVEL_UP:
+      return {
+        ...state,
+        stats: statsReducer(stats, action)
+      };
     case actions.MOVE_PLAYER:
       x += action.payload.x;
       y += action.payload.y;
-      return { ...state, position: { x, y } };
+      return {
+        ...state,
+        position: { x, y }
+      };
     case actions.DRINK_POTION:
       return {
         ...state,
@@ -83,7 +91,8 @@ const reducer = combineReducers({
 
 export default reducer;
 
-/*************************** selectors **************************/
+/*************************** selectors here (for now) **************************/
+
 export function getLocation(state) {
   return state.hero.position;
 }
