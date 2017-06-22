@@ -1,10 +1,32 @@
-"use strict";
+import 'babel-polyfill';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import createSagaMiddleware from 'redux-saga';
+import reducer from './state/reducers';
+import Game from './containers/game';
 
-import store from "./state/store";
-import { gainXp, playerTakeDamage, monsterTakeDamage } from "./state/actions";
+// -------------------
+import rootSaga from './sagas/sagas';
+const sagaMiddleware = createSagaMiddleware();
+// --------------------
 
-console.log(store.getState());
-store.dispatch(monsterTakeDamage(10));
-store.dispatch(playerTakeDamage(7))
-store.dispatch(gainXp(100));
-console.log(store.getState());
+
+const createStoreWithMiddleware = createStore(reducer, composeWithDevTools(
+  applyMiddleware(sagaMiddleware),
+));
+
+// --------------------
+sagaMiddleware.run(rootSaga);
+// --------------------
+
+
+ReactDOM.render((
+  <Provider store={createStoreWithMiddleware}>
+    <Game />
+  </Provider>
+  ),
+  document.getElementById('game')
+);

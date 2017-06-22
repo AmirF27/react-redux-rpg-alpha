@@ -1,41 +1,63 @@
-"use strict";
-
-import { initialState } from "./initial-state";
-
 export const actions = {
-    GAIN_XP: "GAIN_XP",
-    MOVE: "MOVE",
-    DRINK_POTION: "DRINK_POTION",
-    PLAYER_TAKE_DAMAGE: "PLAYER_TAKE_DAMAGE",
-    MONSTER_TAKE_DAMAGE: "MONSTER_TAKE_DAMAGE",
-    ATTACK: "ATTACK"
+  GAIN_XP: 'GAIN_XP',
+  GAIN_XP_ADD_MAX_HEALTH: 'GAIN_XP_ADD_MAX_HEALTH',
+  DRINK_POTION: 'DRINK_POTION',
+  PLAYER_TAKE_DAMAGE: 'PLAYER_TAKE_DAMAGE',
+  MONSTER_TAKE_DAMAGE: 'MONSTER_TAKE_DAMAGE',
+  MOVE_PLAYER: 'MOVE_PLAYER',
+  MOVE: 'MOVE',
+  ATTACK: 'ATTACK',
+  HEAL: 'HEAL'
 };
 
-/*
- * Action Creators
-**/
-export function gainXp(amount) {
+export const actionCreators = {
+  gainXp(amount) {
     return {
-        type: actions.GAIN_XP,
-        payload: amount
+      type: actions.GAIN_XP,
+      payload: amount
     };
-}
-
-export function drinkPotion() {
+  },
+  gainXpAddMaxHealth() {
     return {
-        type: actions.DRINK_POTION,
+      type: actions.GAIN_XP_ADD_MAX_HEALTH,
     };
-}
-
-export function playerTakeDamage(amount) {
+  },
+  drinkPotion() {
     return {
-        type: actions.DRINK_POTION,
+      type: actions.DRINK_POTION,
     };
-}
-
-export function monsterTakeDamage(amount) {
+  },
+  playerTakeDamage(amount) {
     return {
-        type: actions.MONSTER_TAKE_DAMAGE,
-        payload: amount
+      type: actions.PLAYER_TAKE_DAMAGE,
+      payload: amount
     };
-}
+  },
+  monsterTakeDamage(amount) {
+    return {
+      type: actions.MONSTER_TAKE_DAMAGE,
+      payload: amount
+    };
+  },
+  movePlayer(x, y) {
+    return {
+      type: actions.MOVE_PLAYER,
+      payload: { x, y }
+    };
+  },
+  move() {
+    return {
+      type: actions.MOVE,
+    };
+  },
+  attack() {
+    return {
+      type: actions.ATTACK,
+    };
+  },
+  heal() {
+    return {
+      type: actions.HEAL,
+    };
+  }
+};
