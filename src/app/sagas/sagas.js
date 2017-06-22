@@ -18,7 +18,7 @@ export function* gameSaga() {
     yield take(actions.MOVE);
 
     // Move player one tile east
-    yield put(actionCreators.movePlayer(1, 0));
+    yield put(actionCreators.movePlayer(32, 0));
 
     // Show player current location
     const location = yield select(getLocation);
@@ -140,5 +140,5 @@ export function* playerFightOptionsSaga() {
 export default function* rootSaga() {
   yield all([
     gameSaga()
-  ])
+  ]);
 }

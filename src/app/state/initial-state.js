@@ -1,3 +1,5 @@
+import Canvas from '../canvas';
+
 export const initialState = {
   hero: {
     level: 1,
