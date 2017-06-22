@@ -1,5 +1,5 @@
-# React/Redux RPG Demo
+# React/Redux Role-Playing Game
 
-This is a demo for a role-playing game built with React and Redux.
+This is an alpha of a role-playing game built with React and Redux.
 
-You are in Redux-Saga branch!
+You are inside MASTER!

@@ -1,6 +1,6 @@
 export const actions = {
   GAIN_XP: 'GAIN_XP',
-  GAIN_XP_ADD_MAX_HEALTH: 'GAIN_XP_ADD_MAX_HEALTH',
+  ADD_MAX_HEALTH: 'ADD_MAX_HEALTH',
   DRINK_POTION: 'DRINK_POTION',
   PLAYER_TAKE_DAMAGE: 'PLAYER_TAKE_DAMAGE',
   MONSTER_TAKE_DAMAGE: 'MONSTER_TAKE_DAMAGE',
@@ -17,9 +17,9 @@ export const actionCreators = {
       payload: amount
     };
   },
-  gainXpAddMaxHealth() {
+  addMaxHealth() {
     return {
-      type: actions.GAIN_XP_ADD_MAX_HEALTH,
+      type: actions.ADD_MAX_HEALTH,
     };
   },
   drinkPotion() {

@@ -52,7 +52,7 @@ export function* fightSaga() {
       console.log('You have gained 600 XP!');
       // Gain 600 Xp for killing the MONSTER
       yield put(actionCreators.gainXp(600));
-      yield put(actionCreators.gainXpAddMaxHealth());
+      yield put(actionCreators.addMaxHealth());
       return true;
     }
 

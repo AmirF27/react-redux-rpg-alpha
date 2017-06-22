@@ -13,7 +13,7 @@ function statsReducer(state = initialState.hero.stats, action) {
     case actions.MONSTER_TAKE_DAMAGE:
       health = Math.max(0, health - action.payload);
       return { ...state, health };
-    case actions.GAIN_XP_ADD_MAX_HEALTH:
+    case actions.ADD_MAX_HEALTH:
       maxHealth += 10;
       health = maxHealth;
       return { ...state, health, maxHealth };
