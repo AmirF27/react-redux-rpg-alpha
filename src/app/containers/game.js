@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actionCreators } from '../state/actions';
-import { getLocation } from '../state/reducers';
 import Canvas from '../canvas';
 
 class Game extends Component {
@@ -14,20 +13,25 @@ class Game extends Component {
     // create and initialize canvas
     this.canvas = new Canvas('game-canvas').initialize({
       width: 600,
-      height: 100 }
-    );
+      height: 100
+    });
     // initial render of canvas
-    this.renderCanvas();
+    this.renderCanvas(this.props);
   }
 
-  movePlayer() {
-    this.props.move();
-    this.renderCanvas();
+  componentWillReceiveProps(newProps) {
+    if (this.positionChanged(this.props.hero.position, newProps.hero.position)) {
+      this.renderCanvas(newProps);
+    }
   }
 
-  renderCanvas() {
+  positionChanged(prev, current) {
+    return prev.x !== current.x || prev.y !== current.y;
+  }
+
+  renderCanvas(props) {
     // store player's position for convenience
-    let position = this.props.hero.position;
+    let position = props.hero.position;
 
     // clear the canvas so we can redraw
     this.canvas.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -61,7 +65,7 @@ class Game extends Component {
           <h2>Commands</h2>
           <h3>Actions On Main World Map</h3>
           <button
-            onClick={() => this.movePlayer()}
+            onClick={() => this.props.move(1)}
           >Move</button>
           <br />
           <br />

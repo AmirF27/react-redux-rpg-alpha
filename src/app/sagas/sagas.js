@@ -15,10 +15,10 @@ export function* gameSaga() {
   while (playerAlive) {
 
     // Wait for player to move
-    yield take(actions.MOVE);
+    const action = yield take(actions.MOVE);
 
     // Move player one tile east
-    yield put(actionCreators.movePlayer(32, 0));
+    yield put(actionCreators.movePlayer(action.payload.x, 0));
 
     // Show player current location
     const location = yield select(getLocation);

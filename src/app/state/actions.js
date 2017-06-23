@@ -45,9 +45,10 @@ export const actionCreators = {
       payload: { x, y }
     };
   },
-  move() {
+  move(x, y) {
     return {
       type: actions.MOVE,
+      payload: { x, y }
     };
   },
   attack() {
