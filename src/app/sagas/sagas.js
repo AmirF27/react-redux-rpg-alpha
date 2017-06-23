@@ -3,14 +3,16 @@ import { take, select, call, put, race, all } from 'redux-saga/effects';
 import { actions, actionCreators } from '../state/actions';
 // Selectors
 import { getLocation, getMonster, getPlayer } from '../state/reducers';
+import { PLAYER_STEP, CANVAS_WIDTH, CANVAS_HEIGHT, getRandom } from '../helpers';
 
 export function* gameSaga() {
   let playerAlive = true;
-  // Generate random monster location between 10 and 1
+  // Generate random monster location based on canvas size
   // Player starts his adventure from 0
-  const myMax = 10;
-  const myMin = 1;
-  const monsterLocation = (Math.floor(Math.random() * (myMax - myMin + 1) + myMin));
+  const monsterLocation = {
+    x: getRandom(PLAYER_STEP, CANVAS_WIDTH),
+    y: getRandom(PLAYER_STEP, CANVAS_HEIGHT)
+  };
 
   while (playerAlive) {
 
@@ -18,22 +20,21 @@ export function* gameSaga() {
     const action = yield take(actions.MOVE);
 
     // Move player one tile east
-    yield put(actionCreators.movePlayer(action.payload.x, 0));
+    yield put(actionCreators.movePlayer(action.payload.x, action.payload.y));
 
     // Show player current location
     const location = yield select(getLocation);
 
-    if (location.x !== monsterLocation) {
-      console.log('You have just moved! You are safe here! Current location: ', location, '@MONSTER:', monsterLocation);
-      continue;
-    }
-
-    if (location.x === monsterLocation) {
+    if (location.x === monsterLocation.x && location.y === monsterLocation.y) {
       console.log('You have just moved! DANGER! You have met a MONSTER! Current location: ', location)
       console.log('---------------------------------------------------------');
       console.log('Fight begins...');
       // Start fight with the monster
       playerAlive = yield call(fightSaga);
+      continue;
+    }
+    else {
+      console.log('You have just moved! You are safe here! Current location: ', location, '@MONSTER:', monsterLocation);
       continue;
     }
   }

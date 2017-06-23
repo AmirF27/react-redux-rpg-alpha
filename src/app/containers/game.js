@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actionCreators } from '../state/actions';
 import Canvas from '../canvas';
+import { PLAYER_STEP, keyCodes, CANVAS_WIDTH, CANVAS_HEIGHT } from '../helpers';
 
 class Game extends Component {
   constructor(props) {
@@ -9,11 +10,19 @@ class Game extends Component {
     this.canvas = {};
   }
 
+  componentWillMount() {
+    document.addEventListener('keydown', this.keydownEventHandler.bind(this));
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.keydownEventHandler.bind(this));
+  }
+
   componentDidMount() {
     // create and initialize canvas
     this.canvas = new Canvas('game-canvas').initialize({
-      width: 600,
-      height: 100
+      width: CANVAS_WIDTH,
+      height: CANVAS_HEIGHT
     });
     // initial render of canvas
     this.renderCanvas(this.props);
@@ -22,6 +31,26 @@ class Game extends Component {
   componentWillReceiveProps(newProps) {
     if (this.positionChanged(this.props.hero.position, newProps.hero.position)) {
       this.renderCanvas(newProps);
+    }
+  }
+
+  keydownEventHandler(event) {
+    switch (event.keyCode) {
+      case keyCodes.LEFT:
+        this.props.move(-PLAYER_STEP, 0);
+        break;
+
+      case keyCodes.UP:
+        this.props.move(0, -PLAYER_STEP);
+        break;
+
+      case keyCodes.RIGHT:
+        this.props.move(PLAYER_STEP, 0);
+        break;
+
+      case keyCodes.DOWN:
+        this.props.move(0, PLAYER_STEP);
+        break;
     }
   }
 
@@ -65,7 +94,7 @@ class Game extends Component {
           <h2>Commands</h2>
           <h3>Actions On Main World Map</h3>
           <button
-            onClick={() => this.props.move(1)}
+            onClick={() => this.props.move(PLAYER_STEP, 0)}
           >Move</button>
           <br />
           <br />
