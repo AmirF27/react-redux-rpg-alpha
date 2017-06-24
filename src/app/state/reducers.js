@@ -73,8 +73,15 @@ function heroReducer(state = initialState.hero, action) {
 
 function monsterReducer(state = initialState.monster, action) {
   const { stats } = state;
+  let { isAttacking } = state;
 
   switch (action.type) {
+    case actions.MONSTER_ATTACKS:
+      isAttacking = true;
+      return {
+        ...state,
+        isAttacking
+      };
     case actions.MONSTER_TAKE_DAMAGE:
       return {
         ...state,

@@ -18,6 +18,7 @@ export const initialState = {
     }
   },
   monster: {
+    isAttacking: false,
     stats: {
       strength: 9,
       health: 50,

@@ -76,6 +76,9 @@ export function* fightSaga() {
 
 export function* monsterAttackSaga(monster) {
 
+  // Inform redux that MONSTER began his attack
+  yield put(actionCreators.isMonsterAttacking());
+
   // Wait a small delay
   console.log('MONSTER is attacking player...');
   yield call(delay, 2500);

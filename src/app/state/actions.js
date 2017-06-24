@@ -2,12 +2,13 @@ export const actions = {
   ADD_MAX_HEALTH_AFTER_LEVEL_UP: 'ADD_MAX_HEALTH_AFTER_LEVEL_UP',
   GAIN_XP: 'GAIN_XP',
   DRINK_POTION: 'DRINK_POTION',
+  MONSTER_ATTACKS: 'MONSTER_ATTACKS',
   PLAYER_TAKE_DAMAGE: 'PLAYER_TAKE_DAMAGE',
   MONSTER_TAKE_DAMAGE: 'MONSTER_TAKE_DAMAGE',
   MOVE_PLAYER: 'MOVE_PLAYER',
   MOVE: 'MOVE',
   ATTACK: 'ATTACK',
-  HEAL: 'HEAL'
+  HEAL: 'HEAL',
 };
 
 export const actionCreators = {
@@ -25,6 +26,11 @@ export const actionCreators = {
   drinkPotion() {
     return {
       type: actions.DRINK_POTION,
+    };
+  },
+  isMonsterAttacking() {
+    return {
+      type: actions.MONSTER_ATTACKS,
     };
   },
   playerTakeDamage(amount) {
