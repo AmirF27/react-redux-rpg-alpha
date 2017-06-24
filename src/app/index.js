@@ -9,7 +9,7 @@ import reducer from './state/reducers';
 import Game from './containers/Game';
 
 // -------------------
-import rootSaga from './sagas/sagas';
+import rootSaga from './sagas/rootSaga';
 const sagaMiddleware = createSagaMiddleware();
 // --------------------
 
