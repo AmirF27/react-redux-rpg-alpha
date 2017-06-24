@@ -2,6 +2,20 @@ import { initialState, levels } from './initial-state';
 import { actions } from './actions';
 import { combineReducers } from 'redux';
 
+function gameReducer(state = initialState.game, action) {
+  let { buttons } = state;
+
+  switch (action.type) {
+    case actions.ENABLE_BUTTONS:
+      buttons = true;
+      return { ...state, buttons };
+    case actions.DISABLE_BUTTONS:
+      buttons = false;
+      return { ...state, buttons };
+  }
+  return state;
+}
+
 function statsReducer(state = initialState.hero.stats, action) {
   let { health, maxHealth } = state;
 
@@ -98,6 +112,7 @@ function monsterReducer(state = initialState.monster, action) {
 }
 
 const reducer = combineReducers({
+  game: gameReducer,
   hero: heroReducer,
   monster: monsterReducer
 });

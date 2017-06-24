@@ -8,6 +8,7 @@ import { getPlayer } from '../state/reducers';
 export default function* playerAttackSaga() {
   const player = yield select(getPlayer);
 
+  yield put(actionCreators.disableButtons());
   console.log('Player is attacking MONSTER...');
   yield call(delay, 1500);
 

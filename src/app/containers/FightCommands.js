@@ -6,7 +6,8 @@ import Monster from './Monster';
 class FightCommands extends Component {
 
   renderCommands() {
-    const { isAttacking } = this.props;
+    const { buttons, isAttacking } = this.props;
+    const enabled = buttons ? '' : 'disabled';
     if (isAttacking === true) {
       return (
         <section>
@@ -14,10 +15,12 @@ class FightCommands extends Component {
           <h2>Fight Commands</h2>
           <div className="button-wrapper">
             <button
+              disabled={enabled}
               onClick={() => this.props.attack()}
               className="attack"
             >Attack</button>
             <button
+              disabled={enabled}
               onClick={() => this.props.heal()}
               className="heal"
             >Heal</button>
@@ -40,7 +43,8 @@ class FightCommands extends Component {
 
 function mapStateToProps(state) {
   return {
-    isAttacking: state.monster.isAttacking,
+    buttons: state.game.buttons,
+    isAttacking: state.monster.isAttacking
   };
 }
 

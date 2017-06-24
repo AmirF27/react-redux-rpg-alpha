@@ -11,6 +11,10 @@ export default function* playerFightOptionsSaga() {
     attack: take(actions.ATTACK),
     heal: take(actions.HEAL)
   });
-  if (attack) yield call(playerAttackSaga);
-  if (heal) yield call(playerHealSaga);
+  if (attack) {
+    yield call(playerAttackSaga);
+  }
+  if (heal) {
+    yield call(playerHealSaga);
+  }
 }

@@ -18,10 +18,10 @@ export default function* monsterAttackSaga(monster) {
   if (probability >= 0.75) damage = monster.strength + 6; // damage = 15
   if (probability >= 0.90) damage = monster.strength * 2; // Critical damage = 18
 
-  console.log('Player was hit (-', damage, 'HP)')
+  console.log('Player was hit (-', damage, 'HP)');
   yield call(delay, 1500);
-  console.log('Waiting for player action. [#]')
-
+  console.log('Waiting for player action. [#]');
+  yield put(actionCreators.enableButtons());
   // Apply damage to the player
   yield put(actionCreators.playerTakeDamage(damage));
 }

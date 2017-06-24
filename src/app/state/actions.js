@@ -1,4 +1,6 @@
 export const actions = {
+  ENABLE_BUTTONS: 'ENABLE_BUTTONS',
+  DISABLE_BUTTONS: 'DISABLE_BUTTONS',
   ADD_MAX_HEALTH_AFTER_LEVEL_UP: 'ADD_MAX_HEALTH_AFTER_LEVEL_UP',
   GAIN_XP: 'GAIN_XP',
   DRINK_POTION: 'DRINK_POTION',
@@ -13,6 +15,16 @@ export const actions = {
 };
 
 export const actionCreators = {
+  enableButtons() {
+    return {
+      type: actions.ENABLE_BUTTONS,
+    };
+  },
+  disableButtons() {
+    return {
+      type: actions.DISABLE_BUTTONS,
+    };
+  },
   addMaxHealth() {
     return {
       type: actions.ADD_MAX_HEALTH_AFTER_LEVEL_UP,

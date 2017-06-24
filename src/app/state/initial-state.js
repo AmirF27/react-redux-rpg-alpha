@@ -1,6 +1,9 @@
 import Canvas from '../canvas';
 
 export const initialState = {
+  game: {
+    buttons: false
+  },
   hero: {
     level: 1,
     xp: 0,

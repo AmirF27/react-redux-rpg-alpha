@@ -24,7 +24,8 @@ ul li {
 
 .attack,
 .heal {
-  margin: 0 auto;
+  font-size: 30px;
+  font-weight: 700;
   margin: 5px;
   padding: 25px;
 }
