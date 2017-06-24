@@ -8,21 +8,21 @@ class FightCommands extends Component {
   renderCommands() {
     const { buttons, isAttacking } = this.props;
     const enabled = buttons ? '' : 'disabled';
-    if (isAttacking === true) {
+    if (isAttacking) {
       return (
         <section>
           <hr />
           <h2>Fight Commands</h2>
-          <div className="button-wrapper">
+          <div className="btn-wrapper">
             <button
               disabled={enabled}
               onClick={() => this.props.attack()}
-              className="attack"
+              className="btn"
             >Attack</button>
             <button
               disabled={enabled}
               onClick={() => this.props.heal()}
-              className="heal"
+              className="btn"
             >Heal</button>
           </div>
           <Monster />
