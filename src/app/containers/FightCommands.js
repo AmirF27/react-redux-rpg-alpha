@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actionCreators } from '../state/actions';
+import Monster from './Monster';
 
 class FightCommands extends Component {
 
@@ -21,6 +22,7 @@ class FightCommands extends Component {
               className="heal"
             >Heal</button>
           </div>
+          <Monster />
         </section>
       );
     }

@@ -82,6 +82,12 @@ function monsterReducer(state = initialState.monster, action) {
         ...state,
         isAttacking
       };
+    case actions.MONSTER_DEAD:
+      isAttacking = false;
+      return {
+        ...state,
+        isAttacking
+      };
     case actions.MONSTER_TAKE_DAMAGE:
       return {
         ...state,

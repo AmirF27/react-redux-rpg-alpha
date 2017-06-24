@@ -3,6 +3,7 @@ export const actions = {
   GAIN_XP: 'GAIN_XP',
   DRINK_POTION: 'DRINK_POTION',
   MONSTER_ATTACKS: 'MONSTER_ATTACKS',
+  MONSTER_DEAD: 'MONSTER_DEAD',
   PLAYER_TAKE_DAMAGE: 'PLAYER_TAKE_DAMAGE',
   MONSTER_TAKE_DAMAGE: 'MONSTER_TAKE_DAMAGE',
   MOVE_PLAYER: 'MOVE_PLAYER',
@@ -31,6 +32,11 @@ export const actionCreators = {
   isMonsterAttacking() {
     return {
       type: actions.MONSTER_ATTACKS,
+    };
+  },
+  isMonsterDead() {
+    return {
+      type: actions.MONSTER_DEAD,
     };
   },
   playerTakeDamage(amount) {
