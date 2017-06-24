@@ -34,8 +34,7 @@ export default function* gameSaga() {
       // Start fight with the monster
       playerAlive = yield call(fightSaga);
       continue;
-    }
-    else {
+    } else {
       console.log('You have just moved! You are safe here! Current location: ', location, '@MONSTER:', monsterLocation);
       continue;
     }

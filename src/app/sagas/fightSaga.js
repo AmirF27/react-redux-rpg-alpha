@@ -16,7 +16,7 @@ export default function* fightSaga() {
 
     // Is monster dead?
     if (monster.health <= 0) {
-      // Now, after killing the MONSTER, player can still move inside SAGA -> still logging Current location:  Object {x: 3, y: 0}
+      // Now, after killing the MONSTER, player can still move
       console.log('MONSTER is DEAD! You have won!');
       console.log('You have gained 600 XP!');
       // Gain 600 Xp for killing the MONSTER
@@ -28,16 +28,16 @@ export default function* fightSaga() {
     // Monster attack sequence
     yield call(monsterAttackSaga, monster);
 
-    // Is player dead? return false
+    // Is player dead? If so return false
     const player = yield select(getPlayer);
+
     if (player.health <= 0) {
-      // Now player can't move inside SAGA -> No moving console.logs
+      // Now player can't move
       console.log('Player is DEAD! GAME OVER!');
       return false;
     }
 
     // Player fight options
     yield call(playerFightOptionsSaga);
-
   }
 }

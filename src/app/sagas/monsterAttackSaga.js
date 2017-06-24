@@ -4,10 +4,8 @@ import { actionCreators } from '../state/actions';
 
 export default function* monsterAttackSaga(monster) {
 
-  // Inform redux that MONSTER began his attack
+  // Inform redux that MONSTER has just begun his attack
   yield put(actionCreators.isMonsterAttacking());
-
-  // Wait a small delay
   console.log('MONSTER is attacking player...');
   yield call(delay, 1500);
 

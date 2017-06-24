@@ -8,7 +8,6 @@ import { getPlayer } from '../state/reducers';
 export default function* playerAttackSaga() {
   const player = yield select(getPlayer);
 
-  // Wait a small delay
   console.log('Player is attacking MONSTER...');
   yield call(delay, 1500);
 
