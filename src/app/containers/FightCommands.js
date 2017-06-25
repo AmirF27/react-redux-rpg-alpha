@@ -6,26 +6,28 @@ import Monster from './Monster';
 class FightCommands extends Component {
 
   renderCommands() {
-    const { buttons, isAttacking } = this.props;
-    const enabled = buttons ? '' : 'disabled';
+    const { buttons, potions, isAttacking } = this.props;
+    const enabledAttack = buttons ? '' : 'disabled';
+    const enabledHeal = (buttons && (potions !== 0)) ? '' : 'disabled';
     if (isAttacking) {
       return (
         <section>
           <hr />
+          <Monster />
+          <hr />
           <h2>Fight Commands</h2>
           <div className="btn-wrapper">
             <button
-              disabled={enabled}
+              disabled={enabledAttack}
               onClick={() => this.props.attack()}
               className="btn"
             >Attack</button>
             <button
-              disabled={enabled}
+              disabled={enabledHeal}
               onClick={() => this.props.heal()}
               className="btn"
             >Heal</button>
           </div>
-          <Monster />
         </section>
       );
     }
@@ -44,7 +46,8 @@ class FightCommands extends Component {
 function mapStateToProps(state) {
   return {
     buttons: state.game.buttons,
-    isAttacking: state.monster.isAttacking
+    potions: state.hero.inventory.potions,
+    isAttacking: state.monster.isAttacking,
   };
 }
 

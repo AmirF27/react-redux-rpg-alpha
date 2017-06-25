@@ -34,6 +34,7 @@ export default function* fightSaga() {
 
     if (player.health <= 0) {
       // Now player can't move
+      yield put(actionCreators.disableButtons());
       console.log('Player is DEAD! GAME OVER!');
       return false;
     }

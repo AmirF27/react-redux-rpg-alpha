@@ -5,7 +5,6 @@ class Monster extends Component {
   render() {
     return (
       <section>
-        <hr />
         <h3>Monster</h3>
         <ul className="health">
           <li>Health: {this.props.monster.stats.health}/{this.props.monster.stats.maxHealth}</li>
