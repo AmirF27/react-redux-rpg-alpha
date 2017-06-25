@@ -1,3 +1,5 @@
+import map from './map.js';
+
 export const PLAYER_STEP = 2;
 
 export const keyCodes = {
@@ -7,9 +9,9 @@ export const keyCodes = {
   DOWN: 40
 };
 
-export const TILE_SIZE = 64;
-export const CANVAS_WIDTH = 5 * TILE_SIZE;
-export const CANVAS_HEIGHT = 5 * TILE_SIZE;
+export const TILE_SCALE = 2;
+export const CANVAS_WIDTH = map.tileSize * map.cols * TILE_SCALE;
+export const CANVAS_HEIGHT = map.tileSize * map.rows * TILE_SCALE;
 
 /*
  * Returns a random number between min and max that's a multiple of factorial.

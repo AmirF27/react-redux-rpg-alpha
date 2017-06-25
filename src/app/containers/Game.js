@@ -4,7 +4,8 @@ import { actionCreators } from '../state/actions';
 import FightCommands from './FightCommands';
 
 import Canvas from '../canvas';
-import { PLAYER_STEP, keyCodes, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_SIZE } from '../helpers';
+import { PLAYER_STEP, keyCodes, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_SCALE } from '../helpers';
+import map from '../map.js';
 
 class Game extends Component {
   constructor(props) {
@@ -27,14 +28,21 @@ class Game extends Component {
       height: CANVAS_HEIGHT
     });
     // initial render of map and canvas
-    this.renderCanvas(this.props);
-    this.renderMap();
+    map.loadAtlas().then(
+      function fulfilled() {
+        map.render(this.canvas.context, TILE_SCALE);
+        this.renderCanvas(this.props);
+      }.bind(this),
+      function rejected() {
+        console.error('Map rendering failed');
+      }
+    );
   }
 
   componentWillReceiveProps(newProps) {
     if (this.positionChanged(this.props.hero.position, newProps.hero.position)) {
+      map.render(this.canvas.context, 2);
       this.renderCanvas(newProps);
-      this.renderMap();
     }
   }
 
@@ -86,9 +94,6 @@ class Game extends Component {
     // store player's position for convenience
     let position = props.hero.position;
 
-    // clear the canvas so we can redraw
-    ctx.fillStyle = '#00ff00';
-    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     // draw the player on the canvas
     ctx.fillStyle = '#000000';
     ctx.fillRect(position.x, position.y, 32, 32);
