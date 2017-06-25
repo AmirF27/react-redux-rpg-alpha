@@ -28,3 +28,8 @@ ul li {
   margin: 5px;
   padding: 25px;
 }
+
+#game-canvas, .game-commands {
+  float: left;
+  margin: 20px;
+}

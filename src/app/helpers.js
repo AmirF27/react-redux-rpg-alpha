@@ -7,8 +7,9 @@ export const keyCodes = {
   DOWN: 40
 };
 
-export const CANVAS_WIDTH = 25;
-export const CANVAS_HEIGHT = 25;
+export const TILE_SIZE = 64;
+export const CANVAS_WIDTH = 5 * TILE_SIZE;
+export const CANVAS_HEIGHT = 5 * TILE_SIZE;
 
 /*
  * Returns a random number between min and max that's a multiple of factorial.
