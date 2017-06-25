@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-rpg-demo",
+  "name": "react-redux-rpg-alpha",
   "version": "1.0.0",
-  "description": "A demo for a role-playing game built with React and Redux",
+  "description": "This is an alpha of a role-playing game built with React and Redux.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,7 +9,7 @@
     "build": "webpack -d"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.0",
@@ -22,6 +22,10 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
+    "css-loader": "^0.28.4",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "node-sass": "^4.5.3",
+    "postcss-loader": "^2.0.6",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
@@ -29,6 +33,8 @@
     "redux-actions": "^2.0.3",
     "redux-devtools-extension": "^2.13.2",
     "redux-saga": "^0.15.3",
-    "reselect": "^3.0.1"
+    "reselect": "^3.0.1",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2"
   }
 }
