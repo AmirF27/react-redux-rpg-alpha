@@ -2,4 +2,4 @@
 
 This is an alpha of a role-playing game built with React and Redux.
 
-You are inside MASTER!
+You are inside world-map!
