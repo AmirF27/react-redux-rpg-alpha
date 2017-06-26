@@ -17,11 +17,16 @@ function gameReducer(state = initialState.game, action) {
 }
 
 function statsReducer(state = initialState.hero.stats, action) {
-  let { health, maxHealth } = state;
+  let { strength, health, maxHealth } = state;
 
   switch (action.type) {
+    case actions.MONSTER_CREATE:
+      strength = action.payload;
+      maxHealth = (strength * 2) + 20;
+      health = maxHealth;
+    return { ...state, strength, health, maxHealth };
     case actions.DRINK_POTION:
-      health = Math.min(health + 10, maxHealth);
+      health = Math.min(health + 20, maxHealth);
       return { ...state, health, maxHealth };
     case actions.PLAYER_TAKE_DAMAGE:
     case actions.MONSTER_TAKE_DAMAGE:
@@ -90,6 +95,11 @@ function monsterReducer(state = initialState.monster, action) {
   let { isAttacking } = state;
 
   switch (action.type) {
+    case actions.MONSTER_CREATE:
+      return {
+        ...state,
+        stats: statsReducer(stats, action)
+      };
     case actions.MONSTER_ATTACKS:
       isAttacking = true;
       return {

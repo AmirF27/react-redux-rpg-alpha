@@ -23,10 +23,9 @@ export const initialState = {
   monster: {
     isAttacking: false,
     stats: {
-      // Min monster strength = 5
-      strength: 5,
-      health: 50,
-      maxHealth: 50
+      strength: null,
+      health: null,
+      maxHealth: null
     }
   }
 };
