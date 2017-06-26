@@ -10,12 +10,6 @@ import fightSaga from './fightSaga';
 
 export default function* gameSaga() {
   let playerAlive = true;
-  // Generate random monster location based on canvas size
-  // Player starts game from (0, 0)
-  const monsterLocation = {
-    x: getRandom(PLAYER_STEP, CANVAS_WIDTH),
-    y: getRandom(PLAYER_STEP, CANVAS_HEIGHT)
-  };
 
   while (playerAlive) {
     // Wait for player to move
@@ -27,7 +21,9 @@ export default function* gameSaga() {
     // Show player current location
     const location = yield select(getLocation);
 
-    if (location.x === monsterLocation.x && location.y === monsterLocation.y) {
+    const probability = yield call(Math.random);
+    if (probability < 0.10) {
+      console.log('Probability: ', probability)
       console.log('You have just moved! DANGER! You have met a MONSTER! Current location: ', location)
       console.log('---------------------------------------------------------');
       console.log('Fight begins...');
@@ -35,7 +31,7 @@ export default function* gameSaga() {
       playerAlive = yield call(fightSaga);
       continue;
     } else {
-      console.log('You have just moved! You are safe here! Current location: ', location, '@MONSTER:', monsterLocation);
+      console.log('You have just moved! You are safe here! Current location: ', location);
       continue;
     }
   }
