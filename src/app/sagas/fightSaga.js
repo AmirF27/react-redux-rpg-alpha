@@ -3,6 +3,7 @@ import { actionCreators } from '../state/actions';
 
 // Selectors and helpers
 import { getMonster, getPlayer } from '../state/reducers';
+import { whoAttackFirst } from '../helpers';
 
 // Sagas
 import monsterAttackSaga from './monsterAttackSaga';
@@ -20,11 +21,17 @@ export default function* fightSaga() {
       console.log('MONSTER is DEAD! You have won!');
       console.log('You have gained 600 XP!');
       // Gain 600 Xp for killing the MONSTER
-      yield put(actionCreators.gainXp(600));
+      yield put(actionCreators.gainXp(100));
       yield put(actionCreators.isMonsterDead());
-      yield put(actionCreators.addMaxHealth());
       return true;
     }
+
+
+    // Generate random probability
+    const probability = yield call(Math.random);
+    const whoFirst = whoAttackFirst(probability);
+
+    // if (whoFirst) ##############################
 
     // Monster attack sequence
     yield call(monsterAttackSaga, monster);

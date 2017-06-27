@@ -28,8 +28,8 @@ export default function* gameSaga() {
       console.log('---------------------------------------------------------');
       console.log('Fight begins...');
       // Start fight with the monster
-      // Min monster strength = 5
-      yield put(actionCreators.createMonster(random(5, 20)));
+      // Minimum monster level = 1 because of calculateDamage design
+      yield put(actionCreators.createMonster(random(1, 2)));
       playerAlive = yield call(fightSaga);
       continue;
     } else {

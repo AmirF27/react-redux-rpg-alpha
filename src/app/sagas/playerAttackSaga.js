@@ -3,6 +3,7 @@ import { select, call, put } from 'redux-saga/effects';
 import { actionCreators } from '../state/actions';
 
 // Selectors and helpers
+import { calculateDamage } from '../helpers';
 import { getPlayer } from '../state/reducers';
 
 export default function* playerAttackSaga() {
@@ -10,20 +11,16 @@ export default function* playerAttackSaga() {
 
   yield put(actionCreators.disableButtons());
   console.log('Player is attacking MONSTER...');
-  yield call(delay, 1500);
+  yield call(delay, 1000);
 
   // Generate random damage amount
-  let damage = 0;
   const probability = yield call(Math.random);
-  if (probability < 0.25) damage = player.strength - 4;  // damage = 11
-  if (probability >= 0.25) damage = player.strength;     // damage = 15
-  if (probability >= 0.50) damage = player.strength + 2; // damage = 17
-  if (probability >= 0.75) damage = player.strength + 6; // damage = 23
-  if (probability >= 0.90) damage = player.strength * 2; // Critical damage = 30
+  const damage = calculateDamage(probability, player.level);
 
-  console.log('MONSTER was hit (-', damage, 'HP)')
-  yield call(delay, 2500);
+  if (damage === 0) console.log('MONSTER dodged (-', damage, 'HP)');
+  if (damage !== 0) console.log('MONSTER was hit (-', damage, 'HP)');
+  yield call(delay, 1700);
   console.log('-----------------------[NEXT TURN]-----------------------');
-  yield call(delay, 1500);
+  yield call(delay, 1000);
   yield put(actionCreators.monsterTakeDamage(damage));
 }

@@ -17,25 +17,31 @@ function gameReducer(state = initialState.game, action) {
 }
 
 function statsReducer(state = initialState.hero.stats, action) {
-  let { strength, health, maxHealth } = state;
+  let { xp, level, health, maxHealth } = state;
 
   switch (action.type) {
+    case actions.GAIN_XP:
+      xp += action.payload;
+      if (xp >= levels[level].xp) {
+        console.log(levels[level].xp)
+        console.log('Ta1700.5', levels[5].xp)
+        level++;
+        maxHealth = level * 10;
+        health = maxHealth;
+      }
+      return { ...state, xp, level, health, maxHealth};
     case actions.MONSTER_CREATE:
-      strength = action.payload;
-      maxHealth = (strength * 2) + 20;
+      level = action.payload;
+      maxHealth = level * 10;
       health = maxHealth;
-    return { ...state, strength, health, maxHealth };
+      return { ...state, level, health, maxHealth };
     case actions.DRINK_POTION:
-      health = Math.min(health + 20, maxHealth);
+      health = Math.min(health + 5, maxHealth);
       return { ...state, health, maxHealth };
     case actions.PLAYER_TAKE_DAMAGE:
     case actions.MONSTER_TAKE_DAMAGE:
       health = Math.max(0, health - action.payload);
       return { ...state, health };
-    case actions.ADD_MAX_HEALTH_AFTER_LEVEL_UP:
-      maxHealth += 10;
-      health = maxHealth;
-      return { ...state, health, maxHealth };
   }
   return state;
 }
@@ -52,18 +58,11 @@ function inventoryReducer(state = initialState.hero.inventory, action) {
 }
 
 function heroReducer(state = initialState.hero, action) {
-  let { level, xp } = state;
   let { stats, inventory } = state;
   let { position: { x, y } } = state;
 
   switch (action.type) {
     case actions.GAIN_XP:
-      xp += action.payload;
-      if (xp >= levels[level].xp) {
-        level++;
-      }
-      return { ...state, level, xp };
-    case actions.ADD_MAX_HEALTH_AFTER_LEVEL_UP:
       return {
         ...state,
         stats: statsReducer(stats, action)

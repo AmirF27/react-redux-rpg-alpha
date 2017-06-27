@@ -110,11 +110,13 @@ class Game extends Component {
         <div className='game-commands'>
           <section>
             <h3>Position on map: ({this.props.hero.position.x}, {this.props.hero.position.y}) </h3>
-            <h3>Level: {this.props.hero.level} </h3>
-            <h3>XP: {this.props.hero.xp} </h3>
+            <h3>XP: {this.props.hero.stats.xp} </h3>
+            <h3>Potions: {this.props.hero.inventory.potions} </h3>
+            <hr />
+            <h3>Player</h3>
             <ul className="health">
               <li>Health: {this.props.hero.stats.health}/{this.props.hero.stats.maxHealth}</li>
-              <li>Potions: {this.props.hero.inventory.potions}</li>
+              <li>Level: {this.props.hero.stats.level} </li>
             </ul>
           </section>
           <FightCommands />

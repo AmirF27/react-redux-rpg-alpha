@@ -8,13 +8,12 @@ class Monster extends Component {
         <h3>Monster</h3>
         <ul className="health">
           <li>Health: {this.props.monster.stats.health}/{this.props.monster.stats.maxHealth}</li>
-          <li>Strength: {this.props.monster.stats.strength}</li>
+          <li>Level: {this.props.monster.stats.level}</li>
         </ul>
       </section>
     );
   }
 }
-
 
 
 function mapStateToProps(state) {
