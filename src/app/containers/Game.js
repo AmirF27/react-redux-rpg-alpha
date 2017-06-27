@@ -6,6 +6,7 @@ import FightCommands from './FightCommands';
 import Canvas from '../canvas';
 import { PLAYER_STEP, keyCodes, CANVAS_WIDTH, CANVAS_HEIGHT, TILE_SCALE } from '../helpers';
 import map from '../map.js';
+import { game, GameState } from '../game-map';
 
 class Game extends Component {
   constructor(props) {
@@ -22,6 +23,9 @@ class Game extends Component {
   }
 
   componentDidMount() {
+    game.state.add('GameState', GameState);
+    game.state.start('GameState');
+
     // create and initialize canvas
     this.canvas = new Canvas('game-canvas').initialize({
       width: CANVAS_WIDTH,
