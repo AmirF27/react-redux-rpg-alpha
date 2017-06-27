@@ -2,7 +2,9 @@ import Canvas from '../canvas';
 
 export const initialState = {
   game: {
-    buttons: false
+    buttons: false,
+    fight: false,
+    firstMove: true
   },
   hero: {
     position: {
@@ -20,7 +22,6 @@ export const initialState = {
     }
   },
   monster: {
-    isAttacking: false,
     stats: {
       level: null,
       health: null,

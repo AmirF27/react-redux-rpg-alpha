@@ -1,10 +1,11 @@
 export const actions = {
   ENABLE_BUTTONS: 'ENABLE_BUTTONS',
   DISABLE_BUTTONS: 'DISABLE_BUTTONS',
+  FIRST_MOVE: 'FIRST_MOVE',
   GAIN_XP: 'GAIN_XP',
   DRINK_POTION: 'DRINK_POTION',
   MONSTER_CREATE: 'MONSTER_CREATE',
-  MONSTER_ATTACKS: 'MONSTER_ATTACKS',
+  THEY_ARE_FIGHTING: 'THEY_ARE_FIGHTING',
   MONSTER_DEAD: 'MONSTER_DEAD',
   PLAYER_TAKE_DAMAGE: 'PLAYER_TAKE_DAMAGE',
   MONSTER_TAKE_DAMAGE: 'MONSTER_TAKE_DAMAGE',
@@ -25,6 +26,11 @@ export const actionCreators = {
       type: actions.DISABLE_BUTTONS,
     };
   },
+  firstMove() {
+    return {
+      type: actions.FIRST_MOVE,
+    };
+  },
   gainXp(amount) {
     return {
       type: actions.GAIN_XP,
@@ -42,9 +48,9 @@ export const actionCreators = {
       payload: level
     };
   },
-  isMonsterAttacking() {
+  theyAreFighting() {
     return {
-      type: actions.MONSTER_ATTACKS,
+      type: actions.THEY_ARE_FIGHTING,
     };
   },
   isMonsterDead() {

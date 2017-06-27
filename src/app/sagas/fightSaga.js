@@ -2,12 +2,12 @@ import { select, call, put } from 'redux-saga/effects';
 import { actionCreators } from '../state/actions';
 
 // Selectors and helpers
-import { getMonster, getPlayer } from '../state/reducers';
-import { whoAttackFirst } from '../helpers';
+import { getMonster, getPlayer, getFirstMove } from '../state/reducers';
 
 // Sagas
 import monsterAttackSaga from './monsterAttackSaga';
 import playerFightOptionsSaga from './playerFightOptionsSaga';
+import whoAttacksFirstSaga from './whoAttacksFirstSaga';
 
 export default function* fightSaga() {
 
@@ -19,19 +19,19 @@ export default function* fightSaga() {
     if (monster.health <= 0) {
       // Now, after killing the MONSTER, player can still move
       console.log('MONSTER is DEAD! You have won!');
-      console.log('You have gained 600 XP!');
-      // Gain 600 Xp for killing the MONSTER
+      console.log('You have gained XP!');
+      // Gain Xp for killing the MONSTER
       yield put(actionCreators.gainXp(100));
       yield put(actionCreators.isMonsterDead());
       return true;
     }
 
+    // Is this first combat move with this monster?
+    const firstMove = yield select(getFirstMove);
 
-    // Generate random probability
-    const probability = yield call(Math.random);
-    const whoFirst = whoAttackFirst(probability);
-
-    // if (whoFirst) ##############################
+    if (firstMove) {
+      yield call(whoAttacksFirstSaga);
+    }
 
     // Monster attack sequence
     yield call(monsterAttackSaga, monster);
@@ -48,5 +48,7 @@ export default function* fightSaga() {
 
     // Player fight options
     yield call(playerFightOptionsSaga);
+
+
   }
 }

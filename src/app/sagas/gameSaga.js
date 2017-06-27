@@ -3,7 +3,7 @@ import { actions, actionCreators } from '../state/actions';
 
 // Selectors and helpers
 import { getLocation } from '../state/reducers';
-import { PLAYER_STEP, CANVAS_WIDTH, CANVAS_HEIGHT, random } from '../helpers';
+import { randomMonster } from '../helpers';
 
 // Sagas
 import fightSaga from './fightSaga';
@@ -22,14 +22,17 @@ export default function* gameSaga() {
     const location = yield select(getLocation);
 
     const probability = yield call(Math.random);
-    if (probability <= 0) {
+    if (probability <= 0.15) {
       console.log('Probability: ', probability.toFixed(2));
       console.log('You have just moved! DANGER! You have met a MONSTER! Current location: ', location);
       console.log('---------------------------------------------------------');
       console.log('Fight begins...');
-      // Start fight with the monster
+      // Inform redux that fight has just begun
+      yield put(actionCreators.theyAreFighting());
       // Minimum monster level = 1 because of calculateDamage design
-      yield put(actionCreators.createMonster(random(1, 2)));
+      // Probability of creating monster between provided levels
+      const p = yield call(Math.random);
+      yield put(actionCreators.createMonster(randomMonster(p, 1, 3)));
       playerAlive = yield call(fightSaga);
       continue;
     } else {
