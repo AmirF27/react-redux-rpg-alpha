@@ -5,10 +5,10 @@ import { actionCreators } from '../state/actions';
 export default function* playerHealSaga() {
   yield put(actionCreators.disableButtons());
   console.log('Player is drinking a potion...');
-  yield call(delay, 1500);
+  yield call(delay, 1000);
   console.log('Player used his turn to heal.');
-  yield call(delay, 2500);
+  yield call(delay, 1700);
   console.log('-----------------------[NEXT TURN]-----------------------');
-  yield call(delay, 1500);
+  yield call(delay, 1000);
   yield put(actionCreators.drinkPotion());
 }

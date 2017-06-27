@@ -5,25 +5,24 @@ export const initialState = {
     buttons: false
   },
   hero: {
-    level: 1,
-    xp: 0,
     position: {
       x: 0,
       y: 0
     },
     stats: {
-      strength: 15,
-      health: 50,
-      maxHealth: 50
+      xp: 0,
+      level: 1,
+      health: 10,
+      maxHealth: 10
     },
     inventory: {
-      potions: 3
+      potions: 2
     }
   },
   monster: {
     isAttacking: false,
     stats: {
-      strength: null,
+      level: null,
       health: null,
       maxHealth: null
     }
@@ -31,10 +30,14 @@ export const initialState = {
 };
 
 export const levels = [
-  { xp:    0, maxHealth: 50 }, // Level 1
-  { xp:  100, maxHealth: 55 }, // Level 2
-  { xp:  250, maxHealth: 60 }, // Level 3
-  { xp:  500, maxHealth: 67 }, // Level 4
-  { xp: 1000, maxHealth: 75 }, // Level 5
-  { xp: 9999, maxHealth: 99 }, // Level 6
+  { xp:    0 }, // Level 1
+  { xp:  100 }, // Level 2
+  { xp:  250 }, // Level 3
+  { xp:  500 }, // Level 4
+  { xp: 1000 }, // Level 5
+  { xp: 1700 }, // Level 6
+  { xp: 4000 }, // Level 7
+  { xp: 8000 }, // Level 8
+  { xp: 16000 }, // Level 9
+  { xp: 31700 }, // Level 10
 ];

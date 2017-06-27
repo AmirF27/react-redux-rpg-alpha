@@ -1,7 +1,6 @@
 export const actions = {
   ENABLE_BUTTONS: 'ENABLE_BUTTONS',
   DISABLE_BUTTONS: 'DISABLE_BUTTONS',
-  ADD_MAX_HEALTH_AFTER_LEVEL_UP: 'ADD_MAX_HEALTH_AFTER_LEVEL_UP',
   GAIN_XP: 'GAIN_XP',
   DRINK_POTION: 'DRINK_POTION',
   MONSTER_CREATE: 'MONSTER_CREATE',
@@ -26,11 +25,6 @@ export const actionCreators = {
       type: actions.DISABLE_BUTTONS,
     };
   },
-  addMaxHealth() {
-    return {
-      type: actions.ADD_MAX_HEALTH_AFTER_LEVEL_UP,
-    };
-  },
   gainXp(amount) {
     return {
       type: actions.GAIN_XP,
@@ -42,10 +36,10 @@ export const actionCreators = {
       type: actions.DRINK_POTION,
     };
   },
-  createMonster(strength) {
+  createMonster(level) {
     return {
       type: actions.MONSTER_CREATE,
-      payload: strength
+      payload: level
     };
   },
   isMonsterAttacking() {

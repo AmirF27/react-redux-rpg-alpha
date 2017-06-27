@@ -2,24 +2,23 @@ import { delay } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 import { actionCreators } from '../state/actions';
 
+// Selectors and helpers
+import { calculateDamage } from '../helpers';
+
 export default function* monsterAttackSaga(monster) {
 
   // Inform redux that MONSTER has just begun his attack
   yield put(actionCreators.isMonsterAttacking());
   console.log('MONSTER is attacking player...');
-  yield call(delay, 1500);
+  yield call(delay, 1000);
 
   // Generate random damage amount
-  let damage = 0;
   const probability = yield call(Math.random);
-  if (probability < 0.25) damage = monster.strength - 4;  // damage = 5
-  if (probability >= 0.25) damage = monster.strength;     // damage = 9
-  if (probability >= 0.50) damage = monster.strength + 2; // damage = 11
-  if (probability >= 0.75) damage = monster.strength + 6; // damage = 15
-  if (probability >= 0.90) damage = monster.strength * 2; // Critical damage = 18
+  const damage = calculateDamage(probability, monster.level);
 
-  console.log('Player was hit (-', damage, 'HP)');
-  yield call(delay, 1500);
+  if (damage === 0) console.log('Player dodged (-', damage, 'HP)');
+  if (damage !== 0) console.log('Player was hit (-', damage, 'HP)');
+  yield call(delay, 1000);
   console.log('Waiting for player action. [#]');
   yield put(actionCreators.enableButtons());
   // Apply damage to the player
