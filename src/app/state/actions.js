@@ -42,10 +42,10 @@ export const actionCreators = {
       type: actions.DRINK_POTION,
     };
   },
-  createMonster(value) {
+  createMonster(strength) {
     return {
       type: actions.MONSTER_CREATE,
-      payload: value
+      payload: strength
     };
   },
   isMonsterAttacking() {
