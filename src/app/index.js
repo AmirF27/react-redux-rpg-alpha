@@ -15,7 +15,7 @@ const sagaMiddleware = createSagaMiddleware();
 // --------------------
 
 
-const createStoreWithMiddleware = createStore(reducer, composeWithDevTools(
+export const store = createStore(reducer, composeWithDevTools(
   applyMiddleware(sagaMiddleware),
 ));
 
@@ -25,7 +25,7 @@ sagaMiddleware.run(rootSaga);
 
 
 ReactDOM.render((
-  <Provider store={createStoreWithMiddleware}>
+  <Provider store={store}>
     <Game />
   </Provider>
   ),
