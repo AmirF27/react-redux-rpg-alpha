@@ -1,5 +1,26 @@
 # React/Redux Role-Playing Game
 
-This is an alpha of a role-playing game built with React and Redux.
+This is an early alpha of a role-playing game built with React and Redux.
 
-You are inside world-map!
+# Getting started
+
+## Install
+
+```sh
+$ git clone
+```
+
+```sh
+$ npm install
+```
+
+## Run
+
+```sh
+$ npm start
+```
+
+## Play
+```sh
+To move use arrow keys. Open your browser DevTools to see Console messages.
+```
