@@ -5,20 +5,31 @@ import { CANVAS_WIDTH, CANVAS_HEIGHT, PLAYER_STEP, keyCodes, TILE_SIZE } from '.
 import { store } from './index.js';
 import { actionCreators } from './state/actions';
 
-var hero, pressedKey = null, keypressTimer = null;
+var hero,
+    pressedKey = null,
+    keypressTimer = null,
+    inFight = false;
 
 const keys = {
   [keyCodes.LEFT]() {
-    moveHero('left', -PLAYER_STEP, 0);
+    if (!store.getState().game.fight) {
+      moveHero('left', -PLAYER_STEP, 0);
+    }
   },
   [keyCodes.RIGHT]() {
-    moveHero('right', PLAYER_STEP, 0);
+    if (!store.getState().game.fight) {
+      moveHero('right', PLAYER_STEP, 0);
+    }
   },
   [keyCodes.UP]() {
-    moveHero('up', 0, -PLAYER_STEP);
+    if (!store.getState().game.fight) {
+      moveHero('up', 0, -PLAYER_STEP);
+    }
   },
   [keyCodes.DOWN]() {
-    moveHero('down', 0, PLAYER_STEP);
+    if (!store.getState().game.fight) {
+      moveHero('down', 0, PLAYER_STEP);
+    }
   }
 };
 
@@ -68,40 +79,28 @@ export const GameState = {
 };
 
 function keydownEventHandler(event) {
-  if (event.keyCode in keys) {
-    if (pressedKey !== null && event.keyCode !== pressedKey) {
-      clearInterval(keypressTimer);
-      keypressTimer = null;
-    }
+  if (!store.getState().game.fight) {
+    if (event.keyCode in keys) {
+      if (pressedKey !== null && event.keyCode !== pressedKey) {
+        stopHero();
+      }
 
-    pressedKey = event.keyCode;
+      pressedKey = event.keyCode;
 
-    if (keypressTimer === null) {
-      keypressTimer = setInterval(keys[pressedKey], 20);
+      if (keypressTimer === null) {
+        keypressTimer = setInterval(keys[pressedKey], 20);
+      }
     }
+  }
+  else {
+    stopHero();
   }
 }
 
 function keyupEventHandler(event) {
   if (event.keyCode in keys) {
     if (keypressTimer !== null && event.keyCode === pressedKey) {
-      clearInterval(keypressTimer);
-      keypressTimer = null;
-      switch (pressedKey) {
-        case keyCodes.LEFT:
-          setFrame(hero, heroFrames.LEFT);
-          break;
-        case keyCodes.RIGHT:
-          setFrame(hero, heroFrames.RIGHT);
-          break;
-        case keyCodes.UP:
-          setFrame(hero, heroFrames.UP);
-          break;
-        case keyCodes.DOWN:
-          setFrame(hero, heroFrames.DOWN);
-          break;
-      }
-      pressedKey = null;
+      stopHero();
     }
   }
 }
@@ -113,9 +112,28 @@ function moveHero(direction, x, y) {
   hero.y += y;
 }
 
-function setFrame(target, frame) {
-  target.animations.stop();
-  target.frame = frame;
+function stopHero() {
+  hero.animations.stop();
+  clearInterval(keypressTimer);
+  keypressTimer = null;
+
+  switch (pressedKey) {
+    case keyCodes.LEFT:
+      hero.frame = heroFrames.LEFT;
+      break;
+    case keyCodes.RIGHT:
+      hero.frame = heroFrames.RIGHT;
+      break;
+    case keyCodes.UP:
+      hero.frame = heroFrames.UP;
+      break;
+    case keyCodes.DOWN:
+      hero.frame = heroFrames.DOWN;
+      break;
+  }
+
+  pressedKey = null;
+  console.error(hero.x);
 }
 
 export const game = new Phaser.Game(CANVAS_WIDTH, CANVAS_HEIGHT, Phaser.AUTO, 'game-canvas');
