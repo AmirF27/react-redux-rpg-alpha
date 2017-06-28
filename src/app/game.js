@@ -133,7 +133,6 @@ function stopHero() {
   }
 
   pressedKey = null;
-  console.error(hero.x);
 }
 
 export const game = new Phaser.Game(CANVAS_WIDTH, CANVAS_HEIGHT, Phaser.AUTO, 'game-canvas');
