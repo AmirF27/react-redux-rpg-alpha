@@ -22,7 +22,7 @@ export default function* gameSaga() {
     const location = yield select(getLocation);
 
     const probability = yield call(Math.random);
-    if (probability <= 0.15) {
+    if (probability <= 0.002) {
       console.log('Probability: ', probability.toFixed(2));
       console.log('You have just moved! DANGER! You have met a MONSTER! Current location: ', location);
       console.log('---------------------------------------------------------');

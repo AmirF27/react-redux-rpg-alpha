@@ -7,8 +7,7 @@ import { actionCreators } from './state/actions';
 
 var hero,
     pressedKey = null,
-    keypressTimer = null,
-    inFight = false;
+    keypressTimer = null;
 
 const keys = {
   [keyCodes.LEFT]() {
@@ -45,6 +44,7 @@ const heroAnimations = {
   RIGHT: [heroFrames.RIGHT - 1, heroFrames.RIGHT, heroFrames.RIGHT + 1],
   UP: [heroFrames.UP - 1, heroFrames.UP, heroFrames.UP + 1],
   DOWN: [heroFrames.DOWN - 1, heroFrames.DOWN, heroFrames.DOWN + 1],
+  SPEED: 7
 };
 
 export const GameState = {
@@ -66,10 +66,7 @@ export const GameState = {
     hero = this.add.sprite(heroPosition.x, heroPosition.y, 'hero');
     hero.frame = heroFrames.DOWN;
 
-    hero.animations.add('left', heroAnimations.LEFT, 5, true);
-    hero.animations.add('right', heroAnimations.RIGHT, 5, true);
-    hero.animations.add('up', heroAnimations.UP, 5, true);
-    hero.animations.add('down', heroAnimations.DOWN, 5, true);
+    setHeroAnimations();
 
     this.camera.follow(hero);
 
@@ -77,6 +74,13 @@ export const GameState = {
     this.input.keyboard.onUpCallback = keyupEventHandler;
   }
 };
+
+function setHeroAnimations() {
+  hero.animations.add('left', heroAnimations.LEFT, heroAnimations.SPEED, true);
+  hero.animations.add('right', heroAnimations.RIGHT, heroAnimations.SPEED, true);
+  hero.animations.add('up', heroAnimations.UP, heroAnimations.SPEED, true);
+  hero.animations.add('down', heroAnimations.DOWN, heroAnimations.SPEED, true);
+}
 
 function keydownEventHandler(event) {
   if (!store.getState().game.fight) {
@@ -88,7 +92,7 @@ function keydownEventHandler(event) {
       pressedKey = event.keyCode;
 
       if (keypressTimer === null) {
-        keypressTimer = setInterval(keys[pressedKey], 20);
+        keypressTimer = setInterval(keys[pressedKey], PLAYER_STEP * 10);
       }
     }
   }

@@ -1,4 +1,4 @@
-export const PLAYER_STEP = 2;
+export const PLAYER_STEP = 1;
 
 export const keyCodes = {
   LEFT: 37,
