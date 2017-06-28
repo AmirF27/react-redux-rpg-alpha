@@ -4,7 +4,7 @@ import { actionCreators } from '../state/actions';
 import FightCommands from './FightCommands';
 import { game, GameState } from '../game';
 
-class Game extends Component {
+class Main extends Component {
   constructor(props) {
     super(props);
   }
@@ -47,4 +47,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   actionCreators
-)(Game);
+)(Main);
