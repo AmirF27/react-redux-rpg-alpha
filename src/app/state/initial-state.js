@@ -1,5 +1,3 @@
-import Canvas from '../canvas';
-
 export const initialState = {
   game: {
     buttons: false

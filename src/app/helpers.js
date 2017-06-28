@@ -1,5 +1,3 @@
-import map from './map.js';
-
 export const PLAYER_STEP = 2;
 
 export const keyCodes = {
@@ -9,9 +7,12 @@ export const keyCodes = {
   DOWN: 40
 };
 
-export const TILE_SCALE = 2;
-export const CANVAS_WIDTH = map.tileSize * map.cols * TILE_SCALE;
-export const CANVAS_HEIGHT = map.tileSize * map.rows * TILE_SCALE;
+export const TILE_SIZE = 32;
+export const ROWS = 10;
+export const COLS = 10;
+
+export const CANVAS_WIDTH = TILE_SIZE * COLS;
+export const CANVAS_HEIGHT = TILE_SIZE * ROWS;
 
 // Returns a random number between min and max (inclusive)
 export function random(min, max) {
