@@ -3,7 +3,7 @@ import { actions } from './actions';
 import { combineReducers } from 'redux';
 
 function gameReducer(state = initialState.game, action) {
-  let { buttons } = state;
+  let { buttons, fight, firstMove } = state;
 
   switch (action.type) {
     case actions.ENABLE_BUTTONS:
@@ -12,6 +12,16 @@ function gameReducer(state = initialState.game, action) {
     case actions.DISABLE_BUTTONS:
       buttons = false;
       return { ...state, buttons };
+    case actions.FIRST_MOVE:
+      firstMove = false;
+      return { ...state, firstMove };
+    case actions.MONSTER_DEAD:
+      fight = false;
+      firstMove = true;
+      return { ...state, fight, firstMove };
+    case actions.THEY_ARE_FIGHTING:
+      fight = true;
+      return { ...state, fight };
   }
   return state;
 }
@@ -23,8 +33,6 @@ function statsReducer(state = initialState.hero.stats, action) {
     case actions.GAIN_XP:
       xp += action.payload;
       if (xp >= levels[level].xp) {
-        console.log(levels[level].xp)
-        console.log('Ta1700.5', levels[5].xp)
         level++;
         maxHealth = level * 10;
         health = maxHealth;
@@ -36,7 +44,7 @@ function statsReducer(state = initialState.hero.stats, action) {
       health = maxHealth;
       return { ...state, level, health, maxHealth };
     case actions.DRINK_POTION:
-      health = Math.min(health + 5, maxHealth);
+      health = Math.min(health + 10, maxHealth);
       return { ...state, health, maxHealth };
     case actions.PLAYER_TAKE_DAMAGE:
     case actions.MONSTER_TAKE_DAMAGE:
@@ -91,25 +99,12 @@ function heroReducer(state = initialState.hero, action) {
 
 function monsterReducer(state = initialState.monster, action) {
   const { stats } = state;
-  let { isAttacking } = state;
 
   switch (action.type) {
     case actions.MONSTER_CREATE:
       return {
         ...state,
         stats: statsReducer(stats, action)
-      };
-    case actions.MONSTER_ATTACKS:
-      isAttacking = true;
-      return {
-        ...state,
-        isAttacking
-      };
-    case actions.MONSTER_DEAD:
-      isAttacking = false;
-      return {
-        ...state,
-        isAttacking
       };
     case actions.MONSTER_TAKE_DAMAGE:
       return {
@@ -140,4 +135,8 @@ export function getMonster(state) {
 
 export function getPlayer(state) {
   return state.hero.stats;
+}
+
+export function getFirstMove(state) {
+  return state.game.firstMove;
 }

@@ -6,10 +6,10 @@ import Monster from './Monster';
 class FightCommands extends Component {
 
   renderCommands() {
-    const { buttons, potions, isAttacking } = this.props;
+    const { buttons, potions, fight } = this.props;
     const enabledAttack = buttons ? '' : 'disabled';
     const enabledHeal = (buttons && (potions !== 0)) ? '' : 'disabled';
-    if (isAttacking) {
+    if (fight) {
       return (
         <section>
           <hr />
@@ -47,7 +47,7 @@ function mapStateToProps(state) {
   return {
     buttons: state.game.buttons,
     potions: state.hero.inventory.potions,
-    isAttacking: state.monster.isAttacking,
+    fight: state.game.fight,
   };
 }
 

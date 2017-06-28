@@ -6,9 +6,6 @@ import { actionCreators } from '../state/actions';
 import { calculateDamage } from '../helpers';
 
 export default function* monsterAttackSaga(monster) {
-
-  // Inform redux that MONSTER has just begun his attack
-  yield put(actionCreators.isMonsterAttacking());
   console.log('MONSTER is attacking player...');
   yield call(delay, 1000);
 

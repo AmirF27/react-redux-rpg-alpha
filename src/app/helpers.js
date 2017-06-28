@@ -19,6 +19,12 @@ export function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+export function randomMonster(p, minMonsterLevel, maxMonsterLevel) {
+  if (p < 0.66)              return minMonsterLevel;
+  if (p >= 0.66 && p < 0.95) return random(minMonsterLevel, maxMonsterLevel);
+  if (p >= 0.95)             return maxMonsterLevel;
+}
+
 // Calculates damages
 export function calculateDamage(p, level) {
   if (p < 0.20)              return level * 0;
@@ -28,7 +34,7 @@ export function calculateDamage(p, level) {
 }
 
 // Randomly decide who attacks first in a monster encounter
-export function whoAttackFirst(p) {
-  if (p < 0.50) return true;
+export function playerAttacksFirst(p) {
+  if (p <= 0.50) return true;
   return false;
 }
