@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actionCreators } from '../state/actions';
-import FightCommands from './FightCommands';
 import { game, GameState } from '../game';
+import { levels } from '../state/initial-state';
+import FightCommands from './FightCommands';
 
 class Main extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class Main extends Component {
         <div className='game-commands'>
           <section>
             <h3>Position on map: ({this.props.hero.position.x}, {this.props.hero.position.y}) </h3>
-            <h3>XP: {this.props.hero.stats.xp} </h3>
+            <h3>XP: {this.props.hero.stats.xp} / {levels[this.props.hero.stats.level].xp} </h3>
             <h3>Potions: {this.props.hero.inventory.potions} </h3>
             <hr />
             <h3>Player</h3>

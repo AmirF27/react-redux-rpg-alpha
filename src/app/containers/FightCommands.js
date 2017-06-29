@@ -47,7 +47,7 @@ function mapStateToProps(state) {
   return {
     buttons: state.game.buttons,
     potions: state.hero.inventory.potions,
-    fight: state.game.fight,
+    fight: state.game.fight
   };
 }
 

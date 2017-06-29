@@ -18,12 +18,11 @@ export default function* fightSaga() {
 
     // Is monster dead?
     if (monster.health <= 0) {
-      // Now, after killing the MONSTER, player can still move
       console.log('MONSTER is DEAD! You have won!');
       console.log('You have gained XP!');
       // Gain Xp for killing the MONSTER
       yield put(actionCreators.gainXp(100));
-      yield put(actionCreators.isMonsterDead());
+      yield put(actionCreators.monsterIsDead());
       // Back to game
       yield call(gameSaga);
     }

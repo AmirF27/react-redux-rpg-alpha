@@ -53,7 +53,7 @@ export const actionCreators = {
       type: actions.THEY_ARE_FIGHTING,
     };
   },
-  isMonsterDead() {
+  monsterIsDead() {
     return {
       type: actions.MONSTER_DEAD,
     };

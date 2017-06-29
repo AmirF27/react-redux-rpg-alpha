@@ -15,7 +15,6 @@ class Monster extends Component {
   }
 }
 
-
 function mapStateToProps(state) {
   return {
     monster: state.monster

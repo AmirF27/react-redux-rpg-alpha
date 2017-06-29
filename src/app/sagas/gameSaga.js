@@ -15,26 +15,25 @@ export default function* gameSaga() {
     // Wait for player to move
     const action = yield take(actions.MOVE);
 
-    // Move player one tile east
+    // Move player
     yield put(actionCreators.movePlayer(action.payload.x, action.payload.y));
 
     // Show player current location
     const location = yield select(getLocation);
-
     const probability = yield call(Math.random);
+
     if (probability <= 0.002) {
       console.log('DANGER! You have met a MONSTER! Current location: ', location);
       console.log('Fight begins...');
       // Inform redux that fight has just begun
       yield put(actionCreators.theyAreFighting());
-      // Minimum monster level = 1 because of calculateDamage design
       // Probability of creating monster between provided levels
       const p = yield call(Math.random);
       yield put(actionCreators.createMonster(randomMonster(p, 1, 3)));
       playerAlive = yield call(fightSaga);
       continue;
     } else {
-      console.log('Current location: ', location);
+      console.log('Still looking for monster! Current location: ', location);
       continue;
     }
   }
