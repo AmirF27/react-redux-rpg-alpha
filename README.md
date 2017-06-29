@@ -22,5 +22,5 @@ $ npm start
 
 ## Play
 ```sh
-To move use arrow keys. Open your browser DevTools to see Console messages.
+To move use arrow keys. Open your browser DevTools to see more details.
 ```

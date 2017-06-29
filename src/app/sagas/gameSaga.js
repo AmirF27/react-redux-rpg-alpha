@@ -23,9 +23,7 @@ export default function* gameSaga() {
 
     const probability = yield call(Math.random);
     if (probability <= 0.002) {
-      console.log('Probability: ', probability.toFixed(2));
-      console.log('You have just moved! DANGER! You have met a MONSTER! Current location: ', location);
-      console.log('---------------------------------------------------------');
+      console.log('DANGER! You have met a MONSTER! Current location: ', location);
       console.log('Fight begins...');
       // Inform redux that fight has just begun
       yield put(actionCreators.theyAreFighting());
@@ -36,7 +34,7 @@ export default function* gameSaga() {
       playerAlive = yield call(fightSaga);
       continue;
     } else {
-      console.log('You have just moved! You are safe here! Current location: ', location);
+      console.log('Current location: ', location);
       continue;
     }
   }
