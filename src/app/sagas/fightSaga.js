@@ -8,6 +8,7 @@ import { getMonster, getPlayer, getFirstMove } from '../state/reducers';
 import monsterAttackSaga from './monsterAttackSaga';
 import playerFightOptionsSaga from './playerFightOptionsSaga';
 import whoAttacksFirstSaga from './whoAttacksFirstSaga';
+import gameSaga from './gameSaga';
 
 export default function* fightSaga() {
 
@@ -23,7 +24,8 @@ export default function* fightSaga() {
       // Gain Xp for killing the MONSTER
       yield put(actionCreators.gainXp(100));
       yield put(actionCreators.isMonsterDead());
-      return true;
+      // Back to game
+      yield call(gameSaga);
     }
 
     // Is this first combat move with this monster?
@@ -43,12 +45,10 @@ export default function* fightSaga() {
       // Now player can't move
       yield put(actionCreators.disableButtons());
       console.log('Player is DEAD! GAME OVER!');
-      return false;
     }
 
     // Player fight options
     yield call(playerFightOptionsSaga);
-
 
   }
 }

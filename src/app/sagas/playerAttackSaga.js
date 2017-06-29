@@ -1,5 +1,5 @@
 import { delay } from 'redux-saga';
-import { select, call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import { actionCreators } from '../state/actions';
 
 // Selectors and helpers
