@@ -62,9 +62,21 @@ export const GameState = {
     layer1.resizeWorld();
     layer2.resizeWorld();
 
+    this.physics.startSystem(Phaser.Physics.ARCADE);
+
     const heroPosition = store.getState().hero.position;
     hero = this.add.sprite(heroPosition.x, heroPosition.y, 'hero');
     hero.frame = heroFrames.DOWN;
+
+    this.physics.enable(hero, Phaser.Physics.ARCADE);
+    // hero.body.collideWorldBounds = true;
+
+    Object.assign(hero, {
+      collidesWithWorld(x, y) {
+        return this.x + x < 0 || this.x + x + TILE_SIZE > game.world.width ||
+          this.y + y < 0 || this.y + y + TILE_SIZE > game.world.height;
+      }
+    });
 
     setHeroAnimations();
 
@@ -111,9 +123,15 @@ function keyupEventHandler(event) {
 
 function moveHero(direction, x, y) {
   hero.animations.play(direction);
-  store.dispatch(actionCreators.move(x, y));
-  hero.x += x;
-  hero.y += y;
+
+  if (!hero.collidesWithWorld(x, y)) {
+    store.dispatch(actionCreators.move(x, y));
+
+    const newPosition = store.getState().hero.position;
+
+    hero.x = newPosition.x;
+    hero.y = newPosition.y;
+  }
 }
 
 function stopHero() {
