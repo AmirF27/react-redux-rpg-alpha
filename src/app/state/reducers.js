@@ -76,8 +76,8 @@ function heroReducer(state = initialState.hero, action) {
         stats: statsReducer(stats, action)
       };
     case actions.MOVE_PLAYER:
-      x += action.payload.x;
-      y += action.payload.y;
+      x = action.payload.x;
+      y = action.payload.y;
       return {
         ...state,
         position: { x, y }

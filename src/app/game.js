@@ -5,9 +5,7 @@ import { CANVAS_WIDTH, CANVAS_HEIGHT, PLAYER_STEP, keyCodes, TILE_SIZE } from '.
 import { store } from './index.js';
 import { actionCreators } from './state/actions';
 
-var hero,
-    pressedKey = null,
-    keypressTimer = null;
+var hero;
 
 const keys = {
   [keyCodes.LEFT]() {
@@ -57,33 +55,93 @@ export const GameState = {
   create() {
     const map = this.add.tilemap('Map');
     map.addTilesetImage('tileset');
-    const layer1 = map.createLayer('layer1'),
-          layer2 = map.createLayer('layer2');
-    layer1.resizeWorld();
-    layer2.resizeWorld();
 
     this.physics.startSystem(Phaser.Physics.ARCADE);
 
+    this.layers = {
+      layer1: map.createLayer('layer1'),
+      layer2: map.createLayer('layer2'),
+      'collision-layer': map.createLayer('collision-layer')
+    };
+
+
+
+    for (let layer in this.layers) {
+      this.layers[layer].resizeWorld();
+    }
+
     const heroPosition = store.getState().hero.position;
     hero = this.add.sprite(heroPosition.x, heroPosition.y, 'hero');
+    hero.lastDirection = heroFrames.DOWN;
+    hero.moving = false;
     hero.frame = heroFrames.DOWN;
 
     this.physics.enable(hero, Phaser.Physics.ARCADE);
-    // hero.body.collideWorldBounds = true;
-
-    Object.assign(hero, {
-      collidesWithWorld(x, y) {
-        return this.x + x < 0 || this.x + x + TILE_SIZE > game.world.width ||
-          this.y + y < 0 || this.y + y + TILE_SIZE > game.world.height;
-      }
-    });
+    hero.body.collideWorldBounds = true;
 
     setHeroAnimations();
 
+    map.setCollisionBetween(1, 10000, true, this.layers['collision-layer']);
+
     this.camera.follow(hero);
 
-    this.input.keyboard.onDownCallback = keydownEventHandler;
-    this.input.keyboard.onUpCallback = keyupEventHandler;
+    // this.input.keyboard.onDownCallback = keydownEventHandler;
+    // this.input.keyboard.onUpCallback = keyupEventHandler;
+
+    this.cursors = this.input.keyboard.createCursorKeys();
+  },
+
+  update() {
+    console.log(this.physics.arcade.collide(hero, this.layers['collision-layer']));
+
+    if (store.getState().game.fight) {
+      stopHero();
+      return;
+    }
+
+    if (this.cursors.left.isDown) {
+      hero.animations.play('left');
+      hero.body.velocity.x = -100;
+      hero.body.velocity.y = 0;
+      if (hero.lastDirection != heroFrames.LEFT) {
+        hero.lastDirection = heroFrames.LEFT
+      }
+      hero.moving = true;
+    }
+    else if (this.cursors.right.isDown) {
+      hero.animations.play('right');
+      hero.body.velocity.x = 100;
+      hero.body.velocity.y = 0;
+      if (hero.lastDirection != heroFrames.RIGHT) {
+        hero.lastDirection = heroFrames.RIGHT
+      }
+      hero.moving = true;
+    }
+    else if (this.cursors.up.isDown) {
+      hero.animations.play('up');
+      hero.body.velocity.x = 0;
+      hero.body.velocity.y = -100;
+      if (hero.lastDirection != heroFrames.UP) {
+        hero.lastDirection = heroFrames.UP
+      }
+      hero.moving = true;
+    }
+    else if (this.cursors.down.isDown) {
+      hero.animations.play('down');
+      hero.body.velocity.x = 0;
+      hero.body.velocity.y = 100;
+      if (hero.lastDirection != heroFrames.DOWN) {
+        hero.lastDirection = heroFrames.DOWN
+      }
+      hero.moving = true;
+    }
+    else {
+      stopHero();
+    }
+
+    if (hero.moving) {
+      store.dispatch(actionCreators.move(Math.round(hero.x), Math.round(hero.y)));
+    }
   }
 };
 
@@ -94,67 +152,14 @@ function setHeroAnimations() {
   hero.animations.add('down', heroAnimations.DOWN, heroAnimations.SPEED, true);
 }
 
-function keydownEventHandler(event) {
-  if (!store.getState().game.fight) {
-    if (event.keyCode in keys) {
-      if (pressedKey !== null && event.keyCode !== pressedKey) {
-        stopHero();
-      }
-
-      pressedKey = event.keyCode;
-
-      if (keypressTimer === null) {
-        keypressTimer = setInterval(keys[pressedKey], PLAYER_STEP * 10);
-      }
-    }
-  }
-  else {
-    stopHero();
-  }
-}
-
-function keyupEventHandler(event) {
-  if (event.keyCode in keys) {
-    if (keypressTimer !== null && event.keyCode === pressedKey) {
-      stopHero();
-    }
-  }
-}
-
-function moveHero(direction, x, y) {
-  hero.animations.play(direction);
-
-  if (!hero.collidesWithWorld(x, y)) {
-    store.dispatch(actionCreators.move(x, y));
-
-    const newPosition = store.getState().hero.position;
-
-    hero.x = newPosition.x;
-    hero.y = newPosition.y;
-  }
-}
-
 function stopHero() {
-  hero.animations.stop();
-  clearInterval(keypressTimer);
-  keypressTimer = null;
-
-  switch (pressedKey) {
-    case keyCodes.LEFT:
-      hero.frame = heroFrames.LEFT;
-      break;
-    case keyCodes.RIGHT:
-      hero.frame = heroFrames.RIGHT;
-      break;
-    case keyCodes.UP:
-      hero.frame = heroFrames.UP;
-      break;
-    case keyCodes.DOWN:
-      hero.frame = heroFrames.DOWN;
-      break;
+  hero.body.velocity.x = 0;
+  hero.body.velocity.y = 0;
+  if (hero.moving) {
+    hero.animations.stop();
+    hero.frame = hero.lastDirection;
+    hero.moving = false;
   }
-
-  pressedKey = null;
 }
 
 export const game = new Phaser.Game(CANVAS_WIDTH, CANVAS_HEIGHT, Phaser.AUTO, 'game-canvas');
