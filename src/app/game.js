@@ -53,18 +53,19 @@ export const GameState = {
   },
 
   create() {
-    const map = this.add.tilemap('Map');
-    map.addTilesetImage('tileset');
+    this.map = this.add.tilemap('Map');
+    this.map.addTilesetImage('tileset');
+
+    console.log(this.map);
 
     this.physics.startSystem(Phaser.Physics.ARCADE);
 
     this.layers = {
-      layer1: map.createLayer('layer1'),
-      layer2: map.createLayer('layer2'),
-      'collision-layer': map.createLayer('collision-layer')
+      layer1: this.map.createLayer('layer1'),
+      layer2: this.map.createLayer('layer2'),
+      'collision-layer': this.map.createLayer('collision-layer'),
+      'top-layer': this.map.createLayer('top-layer')
     };
-
-
 
     for (let layer in this.layers) {
       this.layers[layer].resizeWorld();
@@ -81,18 +82,17 @@ export const GameState = {
 
     setHeroAnimations();
 
-    map.setCollisionBetween(1, 10000, true, this.layers['collision-layer']);
+    this.map.setCollisionBetween(1, 10000, true, this.layers['collision-layer']);
 
     this.camera.follow(hero);
-
-    // this.input.keyboard.onDownCallback = keydownEventHandler;
-    // this.input.keyboard.onUpCallback = keyupEventHandler;
 
     this.cursors = this.input.keyboard.createCursorKeys();
   },
 
   update() {
-    console.log(this.physics.arcade.collide(hero, this.layers['collision-layer']));
+    this.physics.arcade.collide(hero, this.layers['collision-layer']);
+
+    this.world.bringToTop(this.layers['top-layer']);
 
     if (store.getState().game.fight) {
       stopHero();
